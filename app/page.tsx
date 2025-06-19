@@ -186,11 +186,11 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-10 px-2">
+        <div className="text-center mb-8 sm:mb-10 px-4">
           <div className="flex justify-center mb-6">
             <Logo size="lg" />
           </div>
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3">Aulão de Ética Profissional</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 px-2">Aulão de Ética Profissional</h1>
           <p className="text-gray-500 text-sm sm:text-base px-4">
             Desenvolva suas competências éticas no ambiente profissional
           </p>
