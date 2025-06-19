@@ -220,35 +220,35 @@ export default function EtiquetteTest({ studentName, studentEmail, onBack }: Eti
     }, 0)
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-2 sm:p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
         <div className="max-w-2xl mx-auto">
-          <Button onClick={onBack} variant="ghost" className="mb-4 text-sm">
+          <Button onClick={onBack} variant="ghost" className="mb-6 ml-2 sm:ml-0">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Voltar ao Início
           </Button>
 
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-8">
             <Logo size="md" />
           </div>
 
-          <Card className="border-0 shadow-xl">
-            <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg text-center p-4 sm:p-6">
+          <Card className="border-0 shadow-xl mx-2 sm:mx-0">
+            <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg text-center p-6 sm:p-8">
               <div className="text-4xl sm:text-6xl mb-4">{getResultIcon(totalPoints)}</div>
               <CardTitle className="text-xl sm:text-2xl">Resultado do Teste</CardTitle>
               <CardDescription className="text-green-100 text-sm sm:text-base">
                 {studentName} - Pontuação: {totalPoints}/50
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-4 sm:p-8">
-              <div className="text-center mb-6">
-                <div className={`text-2xl sm:text-4xl font-bold mb-2 ${getResultColor(totalPoints)}`}>
+            <CardContent className="p-6 sm:p-8">
+              <div className="text-center mb-8">
+                <div className={`text-2xl sm:text-4xl font-bold mb-4 ${getResultColor(totalPoints)}`}>
                   {totalPoints} pontos
                 </div>
-                <Progress value={(totalPoints / 50) * 100} className="w-full mb-4" />
+                <Progress value={(totalPoints / 50) * 100} className="w-full mb-6" />
               </div>
 
-              <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
-                <h3 className="font-semibold text-base sm:text-lg mb-3 flex items-center gap-2">
+              <div className="bg-gray-50 p-6 sm:p-8 rounded-lg">
+                <h3 className="font-semibold text-base sm:text-lg mb-4 flex items-center gap-2">
                   <Award className="h-4 w-4 sm:h-5 sm:w-5" />
                   Sua Avaliação:
                 </h3>
@@ -265,8 +265,8 @@ export default function EtiquetteTest({ studentName, studentEmail, onBack }: Eti
                 </p>
               </div>
 
-              <div className="mt-6 text-center">
-                <CheckCircle className="h-8 w-8 sm:h-12 sm:w-12 text-green-500 mx-auto mb-2" />
+              <div className="mt-8 text-center">
+                <CheckCircle className="h-8 w-8 sm:h-12 sm:w-12 text-green-500 mx-auto mb-3" />
                 <p className="text-green-600 font-medium text-sm sm:text-base">Teste concluído com sucesso!</p>
                 <p className="text-gray-500 text-xs sm:text-sm">Suas respostas foram salvas.</p>
               </div>
@@ -291,16 +291,16 @@ export default function EtiquetteTest({ studentName, studentEmail, onBack }: Eti
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-2 sm:p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
       <div className="max-w-2xl mx-auto">
-        <Button onClick={onBack} variant="ghost" className="mb-4 text-sm">
+        <Button onClick={onBack} variant="ghost" className="mb-6 ml-2 sm:ml-0">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar ao Início
         </Button>
 
-        <Card className="border-0 shadow-xl">
-          <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+        <Card className="border-0 shadow-xl mx-2 sm:mx-0">
+          <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
               <div>
                 <CardTitle className="text-lg sm:text-xl">Teste de Boas Maneiras no Trabalho</CardTitle>
                 <CardDescription className="text-green-100 text-sm sm:text-base">
@@ -312,22 +312,22 @@ export default function EtiquetteTest({ studentName, studentEmail, onBack }: Eti
                 <div className="text-xs sm:text-sm text-green-100">/{questions.length}</div>
               </div>
             </div>
-            <Progress value={((currentQuestion + 1) / questions.length) * 100} className="mt-4 bg-green-400" />
+            <Progress value={((currentQuestion + 1) / questions.length) * 100} className="mt-6 bg-green-400" />
           </CardHeader>
-          <CardContent className="p-4 sm:p-8">
-            <h2 className="text-lg sm:text-xl font-semibold mb-6 text-gray-800 leading-relaxed">
+          <CardContent className="p-6 sm:p-8">
+            <h2 className="text-lg sm:text-xl font-semibold mb-8 text-gray-800 leading-relaxed">
               {questions[currentQuestion].question}
             </h2>
 
             <RadioGroup
               value={selectedAnswer?.toString()}
               onValueChange={(value) => handleAnswerSelect(Number.parseInt(value))}
-              className="space-y-3 sm:space-y-4"
+              className="space-y-4 sm:space-y-6"
             >
               {questions[currentQuestion].options.map((option, index) => (
                 <div
                   key={index}
-                  className={`flex items-start space-x-3 p-3 sm:p-4 rounded-lg border-2 transition-all cursor-pointer hover:bg-gray-50 ${
+                  className={`flex items-start space-x-4 p-4 sm:p-6 rounded-lg border-2 transition-all cursor-pointer hover:bg-gray-50 ${
                     selectedAnswer === index ? "border-green-500 bg-green-50" : "border-gray-200"
                   }`}
                   onClick={() => handleAnswerSelect(index)}
@@ -337,19 +337,19 @@ export default function EtiquetteTest({ studentName, studentEmail, onBack }: Eti
                     htmlFor={`option-${index}`}
                     className="flex-1 cursor-pointer text-gray-700 text-sm sm:text-base leading-relaxed"
                   >
-                    <span className="font-medium mr-2 text-blue-600">{String.fromCharCode(65 + index)})</span>
+                    <span className="font-medium mr-3 text-blue-600">{String.fromCharCode(65 + index)})</span>
                     {option.text}
                   </Label>
                 </div>
               ))}
             </RadioGroup>
 
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-              <div className="text-xs sm:text-sm text-gray-500">Estudante: {studentName}</div>
+            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+              <div className="text-xs sm:text-sm text-gray-500 px-2">Estudante: {studentName}</div>
               <Button
                 onClick={handleNextQuestion}
                 disabled={selectedAnswer === null}
-                className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
+                className="bg-green-600 hover:bg-green-700 w-full sm:w-auto h-12"
               >
                 {currentQuestion === questions.length - 1 ? "Finalizar Teste" : "Próxima Questão"}
               </Button>

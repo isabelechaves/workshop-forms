@@ -84,7 +84,7 @@ export default function CaseStudy({
       // Check if it's a bold header (starts with **)
       if (paragraph.startsWith("**") && paragraph.endsWith("**")) {
         return (
-          <h4 key={index} className="font-bold text-base sm:text-lg text-gray-800 mt-4 mb-2">
+          <h4 key={index} className="font-bold text-base sm:text-lg text-gray-800 mt-6 mb-3">
             {paragraph.replace(/\*\*/g, "")}
           </h4>
         )
@@ -93,8 +93,8 @@ export default function CaseStudy({
       // Check if it's a bullet point
       if (paragraph.startsWith("•")) {
         return (
-          <div key={index} className="flex items-start mb-2 ml-2 sm:ml-4">
-            <span className="text-blue-600 font-bold mr-2 mt-1 text-sm">•</span>
+          <div key={index} className="flex items-start mb-3 ml-2 sm:ml-4">
+            <span className="text-blue-600 font-bold mr-3 mt-1 text-sm">•</span>
             <span className="text-gray-700 text-sm sm:text-base leading-relaxed">{paragraph.substring(1).trim()}</span>
           </div>
         )
@@ -102,7 +102,7 @@ export default function CaseStudy({
 
       // Regular paragraph
       return (
-        <p key={index} className="text-gray-700 leading-relaxed mb-3 text-sm sm:text-base">
+        <p key={index} className="text-gray-700 leading-relaxed mb-4 text-sm sm:text-base">
           {paragraph}
         </p>
       )
@@ -111,33 +111,33 @@ export default function CaseStudy({
 
   if (isCompleted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-2 sm:p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
         <div className="max-w-2xl mx-auto">
-          <Button onClick={onBack} variant="ghost" className="mb-4 text-sm">
+          <Button onClick={onBack} variant="ghost" className="mb-6 ml-2 sm:ml-0">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Voltar ao Início
           </Button>
 
-          <Card className="border-0 shadow-xl">
-            <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg text-center p-4 sm:p-6">
+          <Card className="border-0 shadow-xl mx-2 sm:mx-0">
+            <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg text-center p-6 sm:p-8">
               <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 mx-auto mb-4" />
               <CardTitle className="text-xl sm:text-2xl">Estudo de Caso Concluído!</CardTitle>
               <CardDescription className="text-green-100 text-sm sm:text-base">{title}</CardDescription>
             </CardHeader>
-            <CardContent className="p-4 sm:p-8 text-center">
-              <div className="flex justify-center mb-6">
+            <CardContent className="p-6 sm:p-8 text-center">
+              <div className="flex justify-center mb-8">
                 <Logo size="md" />
               </div>
-              <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
-                <h3 className="font-semibold text-base sm:text-lg mb-2">Obrigado, {studentName}!</h3>
-                <p className="text-gray-600 text-sm sm:text-base">
+              <div className="bg-gray-50 p-6 sm:p-8 rounded-lg">
+                <h3 className="font-semibold text-base sm:text-lg mb-3">Obrigado, {studentName}!</h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                   Suas respostas foram salvas com sucesso. O Professor Elvis de Aguiar poderá revisar sua análise ética
                   do caso apresentado.
                 </p>
               </div>
 
-              <div className="mt-6">
-                <Button onClick={onBack} className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto">
+              <div className="mt-8">
+                <Button onClick={onBack} className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto h-12">
                   Voltar aos Formulários
                 </Button>
               </div>
@@ -175,25 +175,25 @@ export default function CaseStudy({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-2 sm:p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
-        <Button onClick={onBack} variant="ghost" className="mb-4 text-sm">
+        <Button onClick={onBack} variant="ghost" className="mb-6 ml-2 sm:ml-0">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar ao Início
         </Button>
 
-        <Card className="border-0 shadow-xl">
-          <CardHeader className={`bg-gradient-to-r ${getGradientClass()} text-white rounded-t-lg p-4 sm:p-6`}>
+        <Card className="border-0 shadow-xl mx-2 sm:mx-0">
+          <CardHeader className={`bg-gradient-to-r ${getGradientClass()} text-white rounded-t-lg p-6 sm:p-8`}>
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
               <FileText className="h-5 w-5 sm:h-6 sm:w-6" />
               <span className="leading-tight">{title}</span>
             </CardTitle>
             <CardDescription className="text-white/90 text-sm sm:text-base">{description}</CardDescription>
           </CardHeader>
-          <CardContent className="p-4 sm:p-8">
-            {/* Case Description - Sem scroll, responsivo */}
-            <div className="bg-gray-50 p-4 sm:p-6 rounded-lg mb-6 sm:mb-8">
-              <h3 className="font-semibold text-lg sm:text-xl mb-3 sm:mb-4 text-gray-800 flex items-center gap-2">
+          <CardContent className="p-6 sm:p-8">
+            {/* Case Description */}
+            <div className="bg-gray-50 p-6 sm:p-8 rounded-lg mb-8 sm:mb-10">
+              <h3 className="font-semibold text-lg sm:text-xl mb-4 sm:mb-6 text-gray-800 flex items-center gap-2">
                 <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
                 Situação:
               </h3>
@@ -201,11 +201,11 @@ export default function CaseStudy({
             </div>
 
             {/* Questions */}
-            <div className="space-y-4 sm:space-y-6">
-              <h3 className="font-semibold text-lg sm:text-xl text-gray-800 mb-3 sm:mb-4">Questões para Reflexão:</h3>
+            <div className="space-y-6 sm:space-y-8">
+              <h3 className="font-semibold text-lg sm:text-xl text-gray-800 mb-4 sm:mb-6">Questões para Reflexão:</h3>
 
               {questions.map((question, index) => (
-                <div key={index} className="space-y-2">
+                <div key={index} className="space-y-3">
                   <Label htmlFor={`question-${index}`} className="text-sm sm:text-base font-medium leading-relaxed">
                     <span className="font-bold text-blue-600">{index + 1}.</span> {question}
                   </Label>
@@ -214,20 +214,20 @@ export default function CaseStudy({
                     value={answers[index]}
                     onChange={(e) => handleAnswerChange(index, e.target.value)}
                     placeholder="Digite sua resposta aqui..."
-                    className="min-h-[100px] sm:min-h-[120px] resize-none text-sm sm:text-base"
+                    className="min-h-[120px] sm:min-h-[140px] resize-none text-sm sm:text-base"
                   />
                 </div>
               ))}
             </div>
 
             {/* Submit Section */}
-            <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                <div className="text-xs sm:text-sm text-gray-500">Estudante: {studentName}</div>
+            <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gray-200">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                <div className="text-xs sm:text-sm text-gray-500 px-2">Estudante: {studentName}</div>
                 <Button
                   onClick={handleSubmit}
                   disabled={answers.some((answer) => answer.trim() === "")}
-                  className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
+                  className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto h-12"
                 >
                   Enviar Respostas
                 </Button>

@@ -183,22 +183,22 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-2 sm:p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-8">
-          <div className="flex justify-center mb-4">
+        <div className="text-center mb-8 sm:mb-10 px-2">
+          <div className="flex justify-center mb-6">
             <Logo size="lg" />
           </div>
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2">Aulão de Ética Profissional</h1>
-          <p className="text-gray-500 text-sm sm:text-base">
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3">Aulão de Ética Profissional</h1>
+          <p className="text-gray-500 text-sm sm:text-base px-4">
             Desenvolva suas competências éticas no ambiente profissional
           </p>
         </div>
 
         {/* Student Info Form */}
-        <Card className="mb-6 sm:mb-8 border-0 shadow-lg">
-          <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg p-4 sm:p-6">
+        <Card className="mb-8 sm:mb-10 border-0 shadow-lg mx-2 sm:mx-0">
+          <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg p-6 sm:p-8">
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
               <Users className="h-4 w-4 sm:h-5 sm:w-5" />
               Identificação do Estudante
@@ -207,10 +207,10 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
               Preencha seus dados antes de iniciar as atividades
             </CardDescription>
           </CardHeader>
-          <CardContent className="p-4 sm:p-6">
-            <div className="grid grid-cols-1 gap-4">
+          <CardContent className="p-6 sm:p-8">
+            <div className="grid grid-cols-1 gap-6">
               <div>
-                <Label htmlFor="name" className="text-sm sm:text-base">
+                <Label htmlFor="name" className="text-sm sm:text-base font-medium">
                   Nome Completo *
                 </Label>
                 <Input
@@ -218,11 +218,11 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
                   value={studentName}
                   onChange={(e) => setStudentName(e.target.value)}
                   placeholder="Digite seu nome completo"
-                  className="mt-1"
+                  className="mt-2 h-12"
                 />
               </div>
               <div>
-                <Label htmlFor="email" className="text-sm sm:text-base">
+                <Label htmlFor="email" className="text-sm sm:text-base font-medium">
                   E-mail (opcional)
                 </Label>
                 <Input
@@ -231,7 +231,7 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
                   value={studentEmail}
                   onChange={(e) => setStudentEmail(e.target.value)}
                   placeholder="seu.email@exemplo.com"
-                  className="mt-1"
+                  className="mt-2 h-12"
                 />
               </div>
             </div>
@@ -239,24 +239,24 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
         </Card>
 
         {/* Forms Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 px-2 sm:px-0">
           {/* Form 1 - Etiquette Test */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
-            <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg p-4 sm:p-6">
+            <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg p-6 sm:p-8">
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-                <Award className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Award className="h-5 w-5 sm:h-6 sm:w-6" />
                 Formulário 1
               </CardTitle>
               <CardDescription className="text-green-100 text-sm sm:text-base">
                 Teste de Boas Maneiras no Trabalho
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-4 sm:p-6">
-              <p className="text-gray-600 mb-4 text-sm sm:text-base">
+            <CardContent className="p-6 sm:p-8">
+              <p className="text-gray-600 mb-6 text-sm sm:text-base leading-relaxed">
                 Teste seus conhecimentos sobre etiqueta e boas maneiras no ambiente profissional. 10 questões de
                 múltipla escolha com resultado personalizado.
               </p>
-              <Button onClick={() => handleStartForm(1)} className="w-full bg-green-600 hover:bg-green-700">
+              <Button onClick={() => handleStartForm(1)} className="w-full bg-green-600 hover:bg-green-700 h-12">
                 Iniciar Teste
               </Button>
             </CardContent>
@@ -264,21 +264,21 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
 
           {/* Form 2 - Case Study 1 */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
-            <CardHeader className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-t-lg p-4 sm:p-6">
+            <CardHeader className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-t-lg p-6 sm:p-8">
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-                <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
+                <FileText className="h-5 w-5 sm:h-6 sm:w-6" />
                 Formulário 2
               </CardTitle>
               <CardDescription className="text-orange-100 text-sm sm:text-base">
                 Ética e Moral no Polo Industrial de Manaus
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-4 sm:p-6">
-              <p className="text-gray-600 mb-4 text-sm sm:text-base">
+            <CardContent className="p-6 sm:p-8">
+              <p className="text-gray-600 mb-6 text-sm sm:text-base leading-relaxed">
                 Analise o caso da BioToc Amazônia e reflita sobre os dilemas éticos entre lucro e responsabilidade
                 social empresarial.
               </p>
-              <Button onClick={() => handleStartForm(2)} className="w-full bg-orange-600 hover:bg-orange-700">
+              <Button onClick={() => handleStartForm(2)} className="w-full bg-orange-600 hover:bg-orange-700 h-12">
                 Iniciar Estudo
               </Button>
             </CardContent>
@@ -286,21 +286,21 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
 
           {/* Form 3 - Case Study 2 */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
-            <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-t-lg p-4 sm:p-6">
+            <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-t-lg p-6 sm:p-8">
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-                <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
+                <BookOpen className="h-5 w-5 sm:h-6 sm:w-6" />
                 Formulário 3
               </CardTitle>
               <CardDescription className="text-purple-100 text-sm sm:text-base">
                 Princípios e Valores da Empresa
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-4 sm:p-6">
-              <p className="text-gray-600 mb-4 text-sm sm:text-base">
+            <CardContent className="p-6 sm:p-8">
+              <p className="text-gray-600 mb-6 text-sm sm:text-base leading-relaxed">
                 Examine o caso "O Bônus Que Custou Caro" e analise os conflitos entre metas de produtividade e valores
                 organizacionais.
               </p>
-              <Button onClick={() => handleStartForm(3)} className="w-full bg-purple-600 hover:bg-purple-700">
+              <Button onClick={() => handleStartForm(3)} className="w-full bg-purple-600 hover:bg-purple-700 h-12">
                 Iniciar Estudo
               </Button>
             </CardContent>
@@ -308,19 +308,19 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
 
           {/* Form 4 - Case Study 3 */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
-            <CardHeader className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-t-lg p-4 sm:p-6">
+            <CardHeader className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-t-lg p-6 sm:p-8">
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-                <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
+                <FileText className="h-5 w-5 sm:h-6 sm:w-6" />
                 Formulário 4
               </CardTitle>
               <CardDescription className="text-teal-100 text-sm sm:text-base">Cultura Organizacional</CardDescription>
             </CardHeader>
-            <CardContent className="p-4 sm:p-6">
-              <p className="text-gray-600 mb-4 text-sm sm:text-base">
+            <CardContent className="p-6 sm:p-8">
+              <p className="text-gray-600 mb-6 text-sm sm:text-base leading-relaxed">
                 Estude o caso da TechManaus e reflita sobre os desafios da transformação cultural em ambientes
                 industriais.
               </p>
-              <Button onClick={() => handleStartForm(4)} className="w-full bg-teal-600 hover:bg-teal-700">
+              <Button onClick={() => handleStartForm(4)} className="w-full bg-teal-600 hover:bg-teal-700 h-12">
                 Iniciar Estudo
               </Button>
             </CardContent>
@@ -328,7 +328,7 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-6 sm:mt-8 text-gray-500">
+        <div className="text-center mt-10 sm:mt-12 text-gray-500 px-4">
           <p className="text-xs sm:text-sm">© 2025 Aulão de Ética Profissional - Prof. Elvis de Aguiar</p>
         </div>
       </div>
