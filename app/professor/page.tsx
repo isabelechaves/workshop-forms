@@ -124,8 +124,8 @@ export default function ProfessorDashboard() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
+        <div className="mb-8 text-center">
+          <div className="flex justify-center mb-4">
             <Logo size="md" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard do Professor</h1>
