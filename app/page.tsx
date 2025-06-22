@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { BookOpen, Users, Award, FileText } from "lucide-react"
+import { BookOpen, Users, Award, FileText, Brain } from "lucide-react"
+import BehavioralCompetencyTest from "@/components/behavioral-competency-test"
 import EtiquetteTest from "@/components/etiquette-test"
 import CaseStudy from "@/components/case-study"
 import Logo from "@/components/logo"
@@ -28,13 +29,17 @@ export default function HomePage() {
   }
 
   if (currentForm === 1) {
-    return <EtiquetteTest studentName={studentName} studentEmail={studentEmail} onBack={handleBackToHome} />
+    return <BehavioralCompetencyTest studentName={studentName} studentEmail={studentEmail} onBack={handleBackToHome} />
   }
 
   if (currentForm === 2) {
+    return <EtiquetteTest studentName={studentName} studentEmail={studentEmail} onBack={handleBackToHome} />
+  }
+
+  if (currentForm === 3) {
     return (
       <CaseStudy
-        formNumber={2}
+        formNumber={3}
         title="Estudo de Caso: Ética e Moral no Polo Industrial de Manaus"
         description="Entre o Lucro e a Responsabilidade: O Dilema da BioToc Amazônia"
         caseText={`A empresa BioToc Amazônia S.A. é uma indústria de médio porte localizada no Polo Industrial de Manaus (PIM), voltada para a produção de cosméticos naturais utilizando extratos vegetais da floresta amazônica. Fundada com o discurso de respeito à biodiversidade e compromisso com o desenvolvimento sustentável, a empresa ganhou rapidamente reconhecimento local e internacional.
@@ -73,10 +78,10 @@ O caso chegou à imprensa, gerando forte repercussão local e exigindo uma respo
     )
   }
 
-  if (currentForm === 3) {
+  if (currentForm === 4) {
     return (
       <CaseStudy
-        formNumber={3}
+        formNumber={4}
         title="Estudo de Caso: Respeitando os Princípios e Valores da Empresa"
         description="O Bônus Que Custou Caro"
         caseText={`A empresa Verde Norte Ambiental S.A. atua no ramo de soluções sustentáveis para o tratamento de resíduos industriais no Polo Industrial de Manaus. Fundada com base em valores como transparência, responsabilidade socioambiental, integridade e trabalho em equipe, ela sempre destacou a importância da conduta ética entre seus colaboradores e líderes.
@@ -116,10 +121,10 @@ O episódio gerou discussões entre os colaboradores sobre o que significa, na p
     )
   }
 
-  if (currentForm === 4) {
+  if (currentForm === 5) {
     return (
       <CaseStudy
-        formNumber={4}
+        formNumber={5}
         title="Estudo de Caso: Cultura Organizacional"
         description="Transformação Cultural na TechManaus"
         caseText={`A empresa TechManaus Indústria de Componentes, instalada no coração do Polo Industrial de Manaus, é reconhecida há mais de duas décadas por sua eficiência na produção de dispositivos eletrônicos para o setor automotivo. Com quase 800 colaboradores, a empresa sempre foi vista como sólida, mas sua gestão interna era marcada por uma cultura organizacional rígida, departamentalizada e com pouca abertura para o diálogo entre os níveis hierárquicos.
@@ -184,7 +189,7 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-10 px-4">
           <div className="flex justify-center mb-6">
@@ -239,13 +244,35 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
         </Card>
 
         {/* Forms Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 px-2 sm:px-0">
-          {/* Form 1 - Etiquette Test */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-0">
+          {/* Form 1 - Behavioral Competency Test */}
+          <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
+            <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-t-lg p-6 sm:p-8">
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                <Brain className="h-5 w-5 sm:h-6 sm:w-6" />
+                Formulário 1
+              </CardTitle>
+              <CardDescription className="text-blue-100 text-sm sm:text-base">
+                Teste de Competência Comportamental
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 sm:p-8">
+              <p className="text-gray-600 mb-6 text-sm sm:text-base leading-relaxed">
+                Avalie suas competências comportamentais em 6 áreas: Ética, Pensamento Empreendedor, Criatividade,
+                Produtividade, Relacionamento Interpessoal e Trabalho em Equipe.
+              </p>
+              <Button onClick={() => handleStartForm(1)} className="w-full bg-blue-600 hover:bg-blue-700 h-12">
+                Iniciar Teste
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Form 2 - Etiquette Test */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
             <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg p-6 sm:p-8">
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                 <Award className="h-5 w-5 sm:h-6 sm:w-6" />
-                Formulário 1
+                Formulário 2
               </CardTitle>
               <CardDescription className="text-green-100 text-sm sm:text-base">
                 Teste de Boas Maneiras no Trabalho
@@ -256,18 +283,18 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
                 Teste seus conhecimentos sobre etiqueta e boas maneiras no ambiente profissional. 10 questões de
                 múltipla escolha com resultado personalizado.
               </p>
-              <Button onClick={() => handleStartForm(1)} className="w-full bg-green-600 hover:bg-green-700 h-12">
+              <Button onClick={() => handleStartForm(2)} className="w-full bg-green-600 hover:bg-green-700 h-12">
                 Iniciar Teste
               </Button>
             </CardContent>
           </Card>
 
-          {/* Form 2 - Case Study 1 */}
+          {/* Form 3 - Case Study 1 */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
             <CardHeader className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-t-lg p-6 sm:p-8">
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                 <FileText className="h-5 w-5 sm:h-6 sm:w-6" />
-                Formulário 2
+                Formulário 3
               </CardTitle>
               <CardDescription className="text-orange-100 text-sm sm:text-base">
                 Ética e Moral no Polo Industrial de Manaus
@@ -278,18 +305,18 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
                 Analise o caso da BioToc Amazônia e reflita sobre os dilemas éticos entre lucro e responsabilidade
                 social empresarial.
               </p>
-              <Button onClick={() => handleStartForm(2)} className="w-full bg-orange-600 hover:bg-orange-700 h-12">
+              <Button onClick={() => handleStartForm(3)} className="w-full bg-orange-600 hover:bg-orange-700 h-12">
                 Iniciar Estudo
               </Button>
             </CardContent>
           </Card>
 
-          {/* Form 3 - Case Study 2 */}
+          {/* Form 4 - Case Study 2 */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
             <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-t-lg p-6 sm:p-8">
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                 <BookOpen className="h-5 w-5 sm:h-6 sm:w-6" />
-                Formulário 3
+                Formulário 4
               </CardTitle>
               <CardDescription className="text-purple-100 text-sm sm:text-base">
                 Princípios e Valores da Empresa
@@ -300,18 +327,18 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
                 Examine o caso "O Bônus Que Custou Caro" e analise os conflitos entre metas de produtividade e valores
                 organizacionais.
               </p>
-              <Button onClick={() => handleStartForm(3)} className="w-full bg-purple-600 hover:bg-purple-700 h-12">
+              <Button onClick={() => handleStartForm(4)} className="w-full bg-purple-600 hover:bg-purple-700 h-12">
                 Iniciar Estudo
               </Button>
             </CardContent>
           </Card>
 
-          {/* Form 4 - Case Study 3 */}
+          {/* Form 5 - Case Study 3 */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
             <CardHeader className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-t-lg p-6 sm:p-8">
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                 <FileText className="h-5 w-5 sm:h-6 sm:w-6" />
-                Formulário 4
+                Formulário 5
               </CardTitle>
               <CardDescription className="text-teal-100 text-sm sm:text-base">Cultura Organizacional</CardDescription>
             </CardHeader>
@@ -320,7 +347,7 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
                 Estude o caso da TechManaus e reflita sobre os desafios da transformação cultural em ambientes
                 industriais.
               </p>
-              <Button onClick={() => handleStartForm(4)} className="w-full bg-teal-600 hover:bg-teal-700 h-12">
+              <Button onClick={() => handleStartForm(5)} className="w-full bg-teal-600 hover:bg-teal-700 h-12">
                 Iniciar Estudo
               </Button>
             </CardContent>
