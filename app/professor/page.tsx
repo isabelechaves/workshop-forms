@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { Download, Users, Award, FileText, Calendar } from "lucide-react"
+import { Download, Users, Award, FileText, Calendar, Brain } from "lucide-react"
 import { createClient } from "@supabase/supabase-js"
 import Logo from "@/components/logo"
 
@@ -31,9 +31,25 @@ interface CaseStudyResponse {
   completed_at: string
 }
 
+interface BehavioralCompetencyResponse {
+  id: number
+  student_name: string
+  student_email: string
+  etica: number
+  pensamento_empreendedor: number
+  criatividade: number
+  produtividade: number
+  relacionamento_interpessoal: number
+  trabalho_em_equipe: number
+  total_score: number
+  average_score: number
+  completed_at: string
+}
+
 export default function ProfessorDashboard() {
   const [etiquetteResponses, setEtiquetteResponses] = useState<EtiquetteResponse[]>([])
   const [caseStudyResponses, setCaseStudyResponses] = useState<CaseStudyResponse[]>([])
+  const [behavioralResponses, setBehavioralResponses] = useState<BehavioralCompetencyResponse[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -64,6 +80,18 @@ export default function ProfessorDashboard() {
         console.error("Error fetching case study responses:", caseStudyError)
       } else {
         setCaseStudyResponses(caseStudyData || [])
+      }
+
+      // Fetch behavioral competency responses
+      const { data: behavioralData, error: behavioralError } = await supabase
+        .from("behavioral_competency_responses")
+        .select("*")
+        .order("completed_at", { ascending: false })
+
+      if (behavioralError) {
+        console.error("Error fetching behavioral responses:", behavioralError)
+      } else {
+        setBehavioralResponses(behavioralData || [])
       }
     } catch (error) {
       console.error("Error:", error)
@@ -167,11 +195,24 @@ export default function ProfessorDashboard() {
                   <p className="text-2xl font-bold text-gray-900">
                     {
                       new Set([
+                        ...behavioralResponses.map((r) => r.student_name),
                         ...etiquetteResponses.map((r) => r.student_name),
                         ...caseStudyResponses.map((r) => r.student_name),
                       ]).size
                     }
                   </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center">
+                <Brain className="h-8 w-8 text-indigo-600" />
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Testes Comportamentais</p>
+                  <p className="text-2xl font-bold text-gray-900">{behavioralResponses.length}</p>
                 </div>
               </div>
             </CardContent>
@@ -198,10 +239,112 @@ export default function ProfessorDashboard() {
 
         {/* Tabs */}
         <Tabs defaultValue="etiquette" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="behavioral">Competências</TabsTrigger>
             <TabsTrigger value="etiquette">Teste de Etiqueta</TabsTrigger>
             <TabsTrigger value="cases">Estudos de Caso</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="behavioral" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Respostas do Teste de Competência Comportamental</CardTitle>
+                    <CardDescription>Visualize as avaliações de competências dos estudantes</CardDescription>
+                  </div>
+                  <Button
+                    onClick={() => exportToCSV(behavioralResponses, "competencias-comportamentais.csv")}
+                    variant="outline"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Exportar CSV
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {behavioralResponses.map((response) => (
+                    <div key={response.id} className="border rounded-lg p-4">
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <h3 className="font-semibold text-lg">{response.student_name}</h3>
+                          {response.student_email && <p className="text-sm text-gray-600">{response.student_email}</p>}
+                        </div>
+                        <div className="text-right">
+                          <Badge className="bg-indigo-100 text-indigo-800">
+                            Média: {response.average_score.toFixed(1)}/10
+                          </Badge>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {new Date(response.completed_at).toLocaleString("pt-BR")}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div className="bg-gray-50 p-3 rounded text-sm">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span>⚖️</span>
+                            <strong>Ética:</strong>
+                          </div>
+                          <span className="text-lg font-bold text-indigo-600">{response.etica}/10</span>
+                        </div>
+
+                        <div className="bg-gray-50 p-3 rounded text-sm">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span>💡</span>
+                            <strong>P. Empreendedor:</strong>
+                          </div>
+                          <span className="text-lg font-bold text-indigo-600">
+                            {response.pensamento_empreendedor}/10
+                          </span>
+                        </div>
+
+                        <div className="bg-gray-50 p-3 rounded text-sm">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span>🎨</span>
+                            <strong>Criatividade:</strong>
+                          </div>
+                          <span className="text-lg font-bold text-indigo-600">{response.criatividade}/10</span>
+                        </div>
+
+                        <div className="bg-gray-50 p-3 rounded text-sm">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span>⚡</span>
+                            <strong>Produtividade:</strong>
+                          </div>
+                          <span className="text-lg font-bold text-indigo-600">{response.produtividade}/10</span>
+                        </div>
+
+                        <div className="bg-gray-50 p-3 rounded text-sm">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span>🤝</span>
+                            <strong>R. Interpessoal:</strong>
+                          </div>
+                          <span className="text-lg font-bold text-indigo-600">
+                            {response.relacionamento_interpessoal}/10
+                          </span>
+                        </div>
+
+                        <div className="bg-gray-50 p-3 rounded text-sm">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span>👥</span>
+                            <strong>Trabalho Equipe:</strong>
+                          </div>
+                          <span className="text-lg font-bold text-indigo-600">{response.trabalho_em_equipe}/10</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {behavioralResponses.length === 0 && (
+                    <p className="text-center text-gray-500 py-8">
+                      Nenhuma resposta de competência comportamental ainda.
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           <TabsContent value="etiquette" className="space-y-4">
             <Card>
