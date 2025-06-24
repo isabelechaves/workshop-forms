@@ -5,35 +5,28 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { ArrowLeft, CheckCircle, FileText } from "lucide-react"
+import { ArrowLeft, CheckCircle, Target } from "lucide-react"
 import { createClient } from "@supabase/supabase-js"
 import Logo from "@/components/logo"
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
-interface CaseStudyProps {
-  formNumber: number
-  title: string
-  description: string
-  caseText: string
-  questions: string[]
+const questions = [
+  "O que dá sentido à sua vida?",
+  "Por que e para que você faz as coisas que faz?",
+  "Você faz ou deixa os outros decidirem por você, decidindo não decidir?",
+  "Se qualquer decisão é sua (inclusive a de fazer de conta que não), quem é responsável pela sua vida?",
+  "E se você é o único responsável pela vida que leva, como mudá-la para chegar aos patamares que só você é capaz de chegar?",
+]
+
+interface LifePurposeTestProps {
   studentName: string
   studentEmail: string
-  studentShift: string // Adicionar esta linha
+  studentShift: string
   onBack: () => void
 }
 
-export default function CaseStudy({
-  formNumber,
-  title,
-  description,
-  caseText,
-  questions,
-  studentName,
-  studentEmail,
-  studentShift, // Adicionar esta linha
-  onBack,
-}: CaseStudyProps) {
+export default function LifePurposeTest({ studentName, studentEmail, studentShift, onBack }: LifePurposeTestProps) {
   const [answers, setAnswers] = useState<string[]>(new Array(questions.length).fill(""))
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
@@ -54,13 +47,15 @@ export default function CaseStudy({
 
     setIsSubmitting(true)
     try {
-      const { error } = await supabase.from("case_study_responses").insert({
-        form_number: formNumber,
+      const { error } = await supabase.from("life_purpose_responses").insert({
         student_name: studentName,
         student_email: studentEmail,
-        shift: studentShift, // Adicionar esta linha
-        case_title: title,
-        answers: answers,
+        shift: studentShift,
+        question_1: answers[0],
+        question_2: answers[1],
+        question_3: answers[2],
+        question_4: answers[3],
+        question_5: answers[4],
         completed_at: new Date().toISOString(),
       })
 
@@ -79,39 +74,6 @@ export default function CaseStudy({
     }
   }
 
-  // Function to render formatted text with proper line breaks and styling
-  const renderFormattedText = (text: string) => {
-    return text.split("\n").map((paragraph, index) => {
-      if (paragraph.trim() === "") return null
-
-      // Check if it's a bold header (starts with **)
-      if (paragraph.startsWith("**") && paragraph.endsWith("**")) {
-        return (
-          <h4 key={index} className="font-bold text-base sm:text-lg text-gray-800 mt-6 mb-3">
-            {paragraph.replace(/\*\*/g, "")}
-          </h4>
-        )
-      }
-
-      // Check if it's a bullet point
-      if (paragraph.startsWith("•")) {
-        return (
-          <div key={index} className="flex items-start mb-3 ml-2 sm:ml-4">
-            <span className="text-blue-600 font-bold mr-3 mt-1 text-sm">•</span>
-            <span className="text-gray-700 text-sm sm:text-base leading-relaxed">{paragraph.substring(1).trim()}</span>
-          </div>
-        )
-      }
-
-      // Regular paragraph
-      return (
-        <p key={index} className="text-gray-700 leading-relaxed mb-4 text-sm sm:text-base">
-          {paragraph}
-        </p>
-      )
-    })
-  }
-
   if (isCompleted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
@@ -122,10 +84,12 @@ export default function CaseStudy({
           </Button>
 
           <Card className="border-0 shadow-xl mx-2 sm:mx-0">
-            <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg text-center p-6 sm:p-8">
+            <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-t-lg text-center p-6 sm:p-8">
               <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 mx-auto mb-4" />
-              <CardTitle className="text-xl sm:text-2xl">Estudo de Caso Concluído!</CardTitle>
-              <CardDescription className="text-green-100 text-sm sm:text-base">{title}</CardDescription>
+              <CardTitle className="text-xl sm:text-2xl">Reflexão sobre Propósito de Vida Concluída!</CardTitle>
+              <CardDescription className="text-amber-100 text-sm sm:text-base">
+                Questionário de Autoconhecimento
+              </CardDescription>
             </CardHeader>
             <CardContent className="p-6 sm:p-8 text-center">
               <div className="flex justify-center mb-8">
@@ -134,13 +98,13 @@ export default function CaseStudy({
               <div className="bg-gray-50 p-6 sm:p-8 rounded-lg">
                 <h3 className="font-semibold text-base sm:text-lg mb-3">Obrigado, {studentName}!</h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  Suas respostas foram salvas com sucesso. O Professor Elvis de Aguiar poderá revisar sua análise ética
-                  do caso apresentado.
+                  Suas reflexões sobre propósito de vida foram salvas com sucesso. O Professor Elvis de Aguiar poderá
+                  revisar suas respostas sobre autoconhecimento e transcendência humana.
                 </p>
               </div>
 
               <div className="mt-8">
-                <Button onClick={onBack} className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto h-12">
+                <Button onClick={onBack} className="bg-amber-600 hover:bg-amber-700 w-full sm:w-auto h-12">
                   Voltar aos Formulários
                 </Button>
               </div>
@@ -164,19 +128,6 @@ export default function CaseStudy({
     )
   }
 
-  const getGradientClass = () => {
-    switch (formNumber) {
-      case 2:
-        return "from-orange-500 to-red-500"
-      case 3:
-        return "from-purple-500 to-pink-500"
-      case 4:
-        return "from-teal-500 to-cyan-500"
-      default:
-        return "from-blue-500 to-indigo-500"
-    }
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
@@ -186,21 +137,38 @@ export default function CaseStudy({
         </Button>
 
         <Card className="border-0 shadow-xl mx-2 sm:mx-0">
-          <CardHeader className={`bg-gradient-to-r ${getGradientClass()} text-white rounded-t-lg p-6 sm:p-8`}>
+          <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-t-lg p-6 sm:p-8">
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <FileText className="h-5 w-5 sm:h-6 sm:w-6" />
-              <span className="leading-tight">{title}</span>
+              <Target className="h-5 w-5 sm:h-6 sm:w-6" />
+              <span className="leading-tight">Propósito de Vida e Transcendência Humana</span>
             </CardTitle>
-            <CardDescription className="text-white/90 text-sm sm:text-base">{description}</CardDescription>
+            <CardDescription className="text-amber-100 text-sm sm:text-base">
+              Reflexões sobre Viktor Frankl e o sentido da existência
+            </CardDescription>
           </CardHeader>
           <CardContent className="p-6 sm:p-8">
-            {/* Case Description */}
+            {/* Introduction Text */}
             <div className="bg-gray-50 p-6 sm:p-8 rounded-lg mb-8 sm:mb-10">
               <h3 className="font-semibold text-lg sm:text-xl mb-4 sm:mb-6 text-gray-800 flex items-center gap-2">
-                <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
-                Situação:
+                <Target className="h-4 w-4 sm:h-5 sm:w-5" />
+                Contexto:
               </h3>
-              <div className="space-y-2">{renderFormattedText(caseText)}</div>
+              <div className="space-y-4 text-sm sm:text-base text-gray-700 leading-relaxed">
+                <p>
+                  <strong>Viktor Frankl</strong> propõe uma reflexão sobre a verdadeira natureza humana: "Cada homem é
+                  único e cada vida humana é singular; ninguém é substituível, nem uma vida é repetível."
+                </p>
+                <p>
+                  Como prisioneiro 119.104 em campos de concentração como Auschwitz, Frankl percebeu que há uma
+                  realidade superior que permite viver: não é ter poder, nem prazer, mas{" "}
+                  <strong>buscar um sentido para a existência</strong>.
+                </p>
+                <p>
+                  As pessoas que conseguem perceber sua existência como dotada de um sentido - seja pela criação
+                  artística, trabalho, amor vivido ou sofrimento transformado em aprendizado - eram as pessoas com menos
+                  chances de se alienarem num vazio existencial.
+                </p>
+              </div>
             </div>
 
             {/* Questions */}
@@ -210,13 +178,13 @@ export default function CaseStudy({
               {questions.map((question, index) => (
                 <div key={index} className="space-y-3">
                   <Label htmlFor={`question-${index}`} className="text-sm sm:text-base font-medium leading-relaxed">
-                    <span className="font-bold text-blue-600">{index + 1}.</span> {question}
+                    <span className="font-bold text-amber-600">{index + 1}.</span> {question}
                   </Label>
                   <Textarea
                     id={`question-${index}`}
                     value={answers[index]}
                     onChange={(e) => handleAnswerChange(index, e.target.value)}
-                    placeholder="Digite sua resposta aqui..."
+                    placeholder="Digite sua reflexão aqui..."
                     className="min-h-[120px] sm:min-h-[140px] resize-none text-sm sm:text-base"
                   />
                 </div>
@@ -230,9 +198,9 @@ export default function CaseStudy({
                 <Button
                   onClick={handleSubmit}
                   disabled={answers.some((answer) => answer.trim() === "")}
-                  className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto h-12"
+                  className="bg-amber-600 hover:bg-amber-700 w-full sm:w-auto h-12"
                 >
-                  Enviar Respostas
+                  Enviar Reflexões
                 </Button>
               </div>
             </div>

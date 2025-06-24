@@ -62,10 +62,16 @@ const competencies: Competency[] = [
 interface BehavioralCompetencyTestProps {
   studentName: string
   studentEmail: string
+  studentShift: string // Adicionar esta linha
   onBack: () => void
 }
 
-export default function BehavioralCompetencyTest({ studentName, studentEmail, onBack }: BehavioralCompetencyTestProps) {
+export default function BehavioralCompetencyTest({
+  studentName,
+  studentEmail,
+  studentShift,
+  onBack,
+}: BehavioralCompetencyTestProps) {
   const [currentCompetency, setCurrentCompetency] = useState(0)
   const [scores, setScores] = useState<Record<string, number>>({})
   const [selectedScore, setSelectedScore] = useState<number | null>(null)
@@ -100,6 +106,7 @@ export default function BehavioralCompetencyTest({ studentName, studentEmail, on
       const { error } = await supabase.from("behavioral_competency_responses").insert({
         student_name: studentName,
         student_email: studentEmail,
+        shift: studentShift, // Adicionar esta linha
         etica: finalScores.etica,
         pensamento_empreendedor: finalScores.pensamento_empreendedor,
         criatividade: finalScores.criatividade,

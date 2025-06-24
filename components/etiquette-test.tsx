@@ -129,10 +129,11 @@ const questions: Question[] = [
 interface EtiquetteTestProps {
   studentName: string
   studentEmail: string
+  studentShift: string // Adicionar esta linha
   onBack: () => void
 }
 
-export default function EtiquetteTest({ studentName, studentEmail, onBack }: EtiquetteTestProps) {
+export default function EtiquetteTest({ studentName, studentEmail, studentShift, onBack }: EtiquetteTestProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
@@ -148,6 +149,8 @@ export default function EtiquetteTest({ studentName, studentEmail, onBack }: Eti
 
     const newAnswers = [...answers, selectedAnswer]
     setAnswers(newAnswers)
+
+    // Reset selectedAnswer to null to clear the selection
     setSelectedAnswer(null)
 
     if (currentQuestion < questions.length - 1) {
@@ -180,6 +183,7 @@ export default function EtiquetteTest({ studentName, studentEmail, onBack }: Eti
       const { error } = await supabase.from("etiquette_test_responses").insert({
         student_name: studentName,
         student_email: studentEmail,
+        shift: studentShift, // Adicionar esta linha
         answers: finalAnswers,
         total_points: totalPoints,
         result_text: resultText,
@@ -320,6 +324,7 @@ export default function EtiquetteTest({ studentName, studentEmail, onBack }: Eti
             </h2>
 
             <RadioGroup
+              key={currentQuestion} // Add this line to force re-render
               value={selectedAnswer?.toString()}
               onValueChange={(value) => handleAnswerSelect(Number.parseInt(value))}
               className="space-y-4 sm:space-y-6"
