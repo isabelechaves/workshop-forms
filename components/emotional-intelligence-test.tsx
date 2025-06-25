@@ -1,67 +1,67 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
-import { ArrowLeft, CheckCircle } from "lucide-react"
+import { ArrowLeft, CheckCircle, Heart } from "lucide-react"
 import { createClient } from "@supabase/supabase-js"
 import Logo from "@/components/logo"
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
-interface EmotionalItem {
+interface Question {
   id: number
   text: string
-  category: "intrapersonal" | "interpersonal"
 }
 
-const emotionalItems: EmotionalItem[] = [
-  { id: 1, text: "Identificar mudanças na excitação fisiológica", category: "intrapersonal" },
-  { id: 2, text: "Relaxar em situação de pressão", category: "intrapersonal" },
-  { id: 3, text: "Agir produtivamente quando zangado", category: "intrapersonal" },
-  { id: 4, text: "Agir produtivamente em situações que provocam ansiedade", category: "intrapersonal" },
-  { id: 5, text: "Acalmar-se depressa quando zangado", category: "intrapersonal" },
-  { id: 6, text: "Associar diferentes indícios sociológicos a diferentes emoções", category: "intrapersonal" },
-  { id: 7, text: "Usar a 'conversa' interna para influenciar seu estado emocional", category: "intrapersonal" },
-  { id: 8, text: "Comunicar com eficácia seus sentimentos", category: "intrapersonal" },
-  { id: 9, text: "Refletir sobre sentimentos negativos sem se perturbar", category: "intrapersonal" },
-  { id: 10, text: "Ficar calmo quando for alvo da raiva de outra pessoa", category: "intrapersonal" },
-  { id: 11, text: "Saber quando você está pensando negativamente", category: "intrapersonal" },
-  { id: 12, text: "Saber quando sua conversa consigo mesmo é instrutiva", category: "intrapersonal" },
-  { id: 13, text: "Saber quando você está ficando zangado", category: "intrapersonal" },
-  { id: 14, text: "Saber como interpretar os acontecimentos", category: "intrapersonal" },
-  { id: 15, text: "Saber que sentidos você está usando no momento", category: "intrapersonal" },
-  { id: 16, text: "Comunicar corretamente o que está sentindo", category: "intrapersonal" },
-  { id: 17, text: "Saber que informações influenciam suas interpretações", category: "intrapersonal" },
-  { id: 18, text: "Identificar suas mudanças de estado de espírito", category: "intrapersonal" },
-  { id: 19, text: "Saber quando você está se comunicando incoerentemente", category: "intrapersonal" },
-  { id: 20, text: "Saber quando você está se comunicando incoerentemente", category: "intrapersonal" },
-  { id: 21, text: "Recuperar-se depressa depois de um retrocesso", category: "intrapersonal" },
-  { id: 22, text: "Completar tarefas longas dentro dos prazos determinados", category: "intrapersonal" },
-  { id: 23, text: "Produzir alta energia fazendo um trabalho desinteressante", category: "intrapersonal" },
-  { id: 24, text: "Cessar ou modificar hábitos pouco eficazes", category: "intrapersonal" },
-  { id: 25, text: "Desenvolver novos padrões de comportamento mais produtivos", category: "intrapersonal" },
-  { id: 26, text: "Depois das palavras, a ação", category: "intrapersonal" },
-  { id: 27, text: "Resolver conflito", category: "interpersonal" },
-  { id: 28, text: "Mostrar técnicas eficazes de comunicação interpessoal", category: "interpersonal" },
-  { id: 29, text: "Mostrar técnicas eficazes de comunicação interpessoal", category: "interpersonal" },
-  { id: 30, text: "Construir a confiança com outras pessoas", category: "interpersonal" },
-  { id: 31, text: "Construir a confiança com outras pessoas", category: "interpersonal" },
-  { id: 32, text: "Construir a confiança com outras pessoas", category: "interpersonal" },
-  { id: 33, text: "Dar conselhos e apoio a outros, quando necessário", category: "interpersonal" },
-  { id: 34, text: "Refletir corretamente os sentimentos de outros para eles mesmos", category: "interpersonal" },
-  { id: 35, text: "Reconhecer quando uma pessoa está preocupada", category: "interpersonal" },
-  { id: 36, text: "Ajudar outras pessoas a controlar as emoções", category: "interpersonal" },
-  { id: 37, text: "Mostrar empatia com outras pessoas", category: "interpersonal" },
-  { id: 38, text: "Mostrar empatia com outras pessoas", category: "interpersonal" },
-  {
-    id: 39,
-    text: "Perceber incongruências entre as emoções ou sentimentos de uma pessoa e seu comportamento",
-    category: "interpersonal",
-  },
+const questions: Question[] = [
+  { id: 1, text: "Consigo identificar quando meu corpo reage a emoções (ex: coração acelera)" },
+  { id: 2, text: "Reconheço facilmente quando estou feliz, triste, com raiva ou ansioso" },
+  { id: 3, text: "Entendo as causas dos meus sentimentos e emoções" },
+  { id: 4, text: "Consigo expressar adequadamente o que estou sentindo" },
+  { id: 5, text: "Mantenho o controle emocional em situações estressantes" },
+  { id: 6, text: "Consigo me acalmar quando estou muito nervoso ou agitado" },
+  { id: 7, text: "Lido bem com críticas e feedbacks negativos" },
+  { id: 8, text: "Mantenho a motivação mesmo diante de obstáculos" },
+  { id: 9, text: "Tenho consciência dos meus pontos fortes e fracos" },
+  { id: 10, text: "Consigo adaptar meu comportamento conforme a situação" },
+  { id: 11, text: "Percebo quando outras pessoas estão tristes, felizes ou irritadas" },
+  { id: 12, text: "Entendo os sentimentos dos outros mesmo quando não os expressam verbalmente" },
+  { id: 13, text: "Consigo me colocar no lugar de outras pessoas" },
+  { id: 14, text: "Sei como consolar alguém que está passando por dificuldades" },
+  { id: 15, text: "Comunico-me de forma clara e efetiva com diferentes pessoas" },
+  { id: 16, text: "Resolvo conflitos de maneira construtiva" },
+  { id: 17, text: "Trabalho bem em equipe e colaboro efetivamente" },
+  { id: 18, text: "Influencio positivamente o humor e comportamento dos outros" },
+  { id: 19, text: "Mantenho relacionamentos saudáveis e duradouros" },
+  { id: 20, text: "Demonstro empatia e compreensão nas interações sociais" },
+  { id: 21, text: "Controlo meus impulsos em situações de pressão" },
+  { id: 22, text: "Mantenho o otimismo mesmo em momentos difíceis" },
+  { id: 23, text: "Tomo decisões equilibradas considerando emoção e razão" },
+  { id: 24, text: "Recupero-me rapidamente de decepções ou fracassos" },
+  { id: 25, text: "Tenho autoconfiança para enfrentar novos desafios" },
+  { id: 26, text: "Reconheço quando preciso de ajuda ou apoio emocional" },
+  { id: 27, text: "Escuto ativamente quando outras pessoas falam comigo" },
+  { id: 28, text: "Ofereço apoio emocional quando alguém precisa" },
+  { id: 29, text: "Nego pedidos de forma respeitosa quando necessário" },
+  { id: 30, text: "Expresso discordância sem ofender ou magoar outros" },
+  { id: 31, text: "Lidero grupos ou projetos de forma eficaz" },
+  { id: 32, text: "Inspiro confiança nas pessoas ao meu redor" },
+  { id: 33, text: "Medito ou uso técnicas para gerenciar minhas emoções" },
+  { id: 34, text: "Reflito sobre meus comportamentos e atitudes regularmente" },
+  { id: 35, text: "Estabeleço limites saudáveis nos relacionamentos" },
+  { id: 36, text: "Perdoo facilmente quando alguém me magoa" },
+  { id: 37, text: "Celebro conquistas e sucessos de outras pessoas" },
+  { id: 38, text: "Mantenho a calma em discussões ou debates acalorados" },
+  { id: 39, text: "Busco crescimento pessoal e desenvolvimento emocional" },
 ]
+
+interface QuestionResponse {
+  intrapersonal: number
+  interpersonal: number
+}
 
 interface EmotionalIntelligenceTestProps {
   studentName: string
@@ -76,55 +76,83 @@ export default function EmotionalIntelligenceTest({
   studentShift,
   onBack,
 }: EmotionalIntelligenceTestProps) {
-  const [currentItem, setCurrentItem] = useState(0)
-  const [scores, setScores] = useState<Record<number, number>>({})
-  const [selectedScore, setSelectedScore] = useState<number | null>(null)
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [responses, setResponses] = useState<QuestionResponse[]>(
+    new Array(39).fill({ intrapersonal: 0, interpersonal: 0 }),
+  )
+  const [currentResponse, setCurrentResponse] = useState<QuestionResponse>({ intrapersonal: 0, interpersonal: 0 })
   const [showResult, setShowResult] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [canGoBack, setCanGoBack] = useState(false)
 
-  const handleScoreSelect = (score: number) => {
-    setSelectedScore(score)
+  useEffect(() => {
+    setCanGoBack(currentQuestion > 0)
+    // Set the current response to the saved response if it exists
+    const savedResponse = responses[currentQuestion]
+    if (savedResponse && (savedResponse.intrapersonal > 0 || savedResponse.interpersonal > 0)) {
+      setCurrentResponse(savedResponse)
+    } else {
+      setCurrentResponse({ intrapersonal: 0, interpersonal: 0 })
+    }
+  }, [currentQuestion, responses])
+
+  const handleScoreSelect = (type: "intrapersonal" | "interpersonal", score: number) => {
+    setCurrentResponse((prev) => ({
+      ...prev,
+      [type]: score,
+    }))
   }
 
-  const handleNextItem = () => {
-    if (selectedScore === null) return
+  const handleNextQuestion = () => {
+    if (currentResponse.intrapersonal === 0 || currentResponse.interpersonal === 0) return
 
-    const newScores = { ...scores, [emotionalItems[currentItem].id]: selectedScore }
-    setScores(newScores)
-    setSelectedScore(null)
+    // Save current response
+    const newResponses = [...responses]
+    newResponses[currentQuestion] = currentResponse
+    setResponses(newResponses)
 
-    if (currentItem < emotionalItems.length - 1) {
-      setCurrentItem(currentItem + 1)
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1)
     } else {
-      calculateResult(newScores)
+      calculateResult(newResponses)
     }
   }
 
-  const calculateResult = async (finalScores: Record<number, number>) => {
-    const intrapersonalItems = emotionalItems.filter((item) => item.category === "intrapersonal")
-    const interpersonalItems = emotionalItems.filter((item) => item.category === "interpersonal")
+  const handlePreviousQuestion = () => {
+    if (currentQuestion > 0) {
+      // Save current response before going back
+      const newResponses = [...responses]
+      newResponses[currentQuestion] = currentResponse
+      setResponses(newResponses)
+      setCurrentQuestion(currentQuestion - 1)
+    }
+  }
 
-    const intrapersonalScore = intrapersonalItems.reduce((sum, item) => sum + finalScores[item.id], 0)
-    const interpersonalScore = interpersonalItems.reduce((sum, item) => sum + finalScores[item.id], 0)
-    const totalScore = intrapersonalScore + interpersonalScore
-    const averageScore = totalScore / emotionalItems.length
+  const calculateResult = async (finalResponses: QuestionResponse[]) => {
+    // Calculate total scores
+    const totalIntrapersonal = finalResponses.reduce((sum, response) => sum + response.intrapersonal, 0)
+    const totalInterpersonal = finalResponses.reduce((sum, response) => sum + response.interpersonal, 0)
+    const totalScore = totalIntrapersonal + totalInterpersonal
+    const averageScore = totalScore / (39 * 2) // 39 questions × 2 scores each
 
     // Prepare data for database
     const dbData: any = {
       student_name: studentName,
       student_email: studentEmail,
       shift: studentShift,
-      intrapersonal_score: intrapersonalScore,
-      interpersonal_score: interpersonalScore,
+      intrapersonal_score: totalIntrapersonal,
+      interpersonal_score: totalInterpersonal,
       total_score: totalScore,
       average_score: averageScore,
       completed_at: new Date().toISOString(),
     }
 
-    // Add individual item scores
-    for (let i = 1; i <= 39; i++) {
-      dbData[`item_${i}`] = finalScores[i]
-    }
+    // Add individual item scores (combining both scores for compatibility)
+    finalResponses.forEach((response, index) => {
+      // For database compatibility, we'll store the average of both scores per item
+      const averageItemScore = (response.intrapersonal + response.interpersonal) / 2
+      dbData[`item_${index + 1}`] = averageItemScore
+    })
 
     setIsSubmitting(true)
     try {
@@ -147,25 +175,25 @@ export default function EmotionalIntelligenceTest({
   }
 
   const getScoreColor = (score: number) => {
-    if (score >= 6) return "text-green-600"
+    if (score >= 5.5) return "text-green-600"
     if (score >= 4) return "text-yellow-600"
     return "text-red-600"
   }
 
   const getScoreLabel = (score: number) => {
-    if (score >= 6) return "Alta Capacidade"
+    if (score >= 5.5) return "Alta Capacidade"
     if (score >= 4) return "Capacidade Moderada"
     return "Baixa Capacidade"
   }
 
   if (showResult) {
-    const intrapersonalItems = emotionalItems.filter((item) => item.category === "intrapersonal")
-    const interpersonalItems = emotionalItems.filter((item) => item.category === "interpersonal")
+    const totalIntrapersonal = responses.reduce((sum, response) => sum + response.intrapersonal, 0)
+    const totalInterpersonal = responses.reduce((sum, response) => sum + response.interpersonal, 0)
+    const totalScore = totalIntrapersonal + totalInterpersonal
+    const averageScore = totalScore / (39 * 2)
 
-    const intrapersonalScore = intrapersonalItems.reduce((sum, item) => sum + scores[item.id], 0)
-    const interpersonalScore = interpersonalItems.reduce((sum, item) => sum + scores[item.id], 0)
-    const totalScore = intrapersonalScore + interpersonalScore
-    const averageScore = totalScore / emotionalItems.length
+    const intrapersonalAverage = totalIntrapersonal / 39
+    const interpersonalAverage = totalInterpersonal / 39
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
@@ -184,7 +212,7 @@ export default function EmotionalIntelligenceTest({
               <div className="text-4xl sm:text-6xl mb-4">❤️</div>
               <CardTitle className="text-xl sm:text-2xl">Resultado do Teste de Inteligência Emocional</CardTitle>
               <CardDescription className="text-pink-100 text-sm sm:text-base">
-                {studentName} - Pontuação Média: {averageScore.toFixed(1)}/7
+                {studentName} - Pontuação Média Geral: {averageScore.toFixed(1)}/7
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 sm:p-8">
@@ -202,42 +230,55 @@ export default function EmotionalIntelligenceTest({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-blue-50 p-6 rounded-lg">
                   <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">🧠 Intrapessoal</h3>
-                  <div className="text-2xl font-bold text-blue-600 mb-2">
-                    {intrapersonalScore}/{intrapersonalItems.length * 7}
-                  </div>
-                  <Progress value={(intrapersonalScore / (intrapersonalItems.length * 7)) * 100} className="mb-2" />
-                  <p className="text-sm text-gray-600">Autoconhecimento e autorregulação emocional</p>
+                  <div className="text-2xl font-bold text-blue-600 mb-2">{intrapersonalAverage.toFixed(1)}/7</div>
+                  <div className="text-sm text-gray-600 mb-2">({totalIntrapersonal}/273 pontos)</div>
+                  <Progress value={(intrapersonalAverage / 7) * 100} className="mb-2" />
+                  <p className="text-sm text-gray-600">Percepção e controle das próprias emoções</p>
                 </div>
 
                 <div className="bg-green-50 p-6 rounded-lg">
                   <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">🤝 Interpessoal</h3>
-                  <div className="text-2xl font-bold text-green-600 mb-2">
-                    {interpersonalScore}/{interpersonalItems.length * 7}
-                  </div>
-                  <Progress value={(interpersonalScore / (interpersonalItems.length * 7)) * 100} className="mb-2" />
-                  <p className="text-sm text-gray-600">Habilidades sociais e relacionamento com outros</p>
+                  <div className="text-2xl font-bold text-green-600 mb-2">{interpersonalAverage.toFixed(1)}/7</div>
+                  <div className="text-sm text-gray-600 mb-2">({totalInterpersonal}/273 pontos)</div>
+                  <Progress value={(interpersonalAverage / 7) * 100} className="mb-2" />
+                  <p className="text-sm text-gray-600">Habilidade de lidar com emoções e interações com outros</p>
                 </div>
               </div>
 
-              {/* Items to develop */}
+              {/* Recommendations */}
               <div className="bg-yellow-50 p-6 rounded-lg mb-8">
                 <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                  📈 Itens para Desenvolver (Nota ≤ 4):
+                  📈 Recomendações para Desenvolvimento:
                 </h3>
-                <div className="space-y-2">
-                  {emotionalItems
-                    .filter((item) => scores[item.id] <= 4)
-                    .map((item) => (
-                      <div key={item.id} className="flex justify-between items-center">
-                        <span className="text-sm">
-                          {item.id}. {item.text}
-                        </span>
-                        <span className="font-bold text-red-600">{scores[item.id]}/7</span>
+                <div className="space-y-3">
+                  {intrapersonalAverage < 5 && (
+                    <div className="flex items-start gap-2">
+                      <span className="text-blue-600 font-bold">🧠</span>
+                      <div>
+                        <p className="font-medium text-blue-800">Inteligência Intrapessoal</p>
+                        <p className="text-sm text-gray-600">
+                          Pratique mindfulness, autoavaliação regular e técnicas de autorregulação emocional. Desenvolva
+                          maior consciência sobre suas reações emocionais.
+                        </p>
                       </div>
-                    ))}
-                  {emotionalItems.filter((item) => scores[item.id] <= 4).length === 0 && (
+                    </div>
+                  )}
+                  {interpersonalAverage < 5 && (
+                    <div className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold">🤝</span>
+                      <div>
+                        <p className="font-medium text-green-800">Inteligência Interpessoal</p>
+                        <p className="text-sm text-gray-600">
+                          Desenvolva habilidades de escuta ativa, empatia e comunicação assertiva. Pratique a leitura de
+                          sinais não-verbais e melhore suas habilidades sociais.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {intrapersonalAverage >= 5 && interpersonalAverage >= 5 && (
                     <p className="text-green-600 font-medium">
-                      Parabéns! Todas as suas competências estão bem desenvolvidas.
+                      Parabéns! Suas competências emocionais estão bem desenvolvidas. Continue praticando e refinando
+                      essas habilidades!
                     </p>
                   )}
                 </div>
@@ -268,9 +309,13 @@ export default function EmotionalIntelligenceTest({
     )
   }
 
+  const currentQuestionData = questions[currentQuestion]
+  const progress = ((currentQuestion + 1) / questions.length) * 100
+  const isComplete = currentResponse.intrapersonal > 0 && currentResponse.interpersonal > 0
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <Button onClick={onBack} variant="ghost" className="mb-6 ml-2 sm:ml-0">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar ao Início
@@ -280,53 +325,51 @@ export default function EmotionalIntelligenceTest({
           <CardHeader className="bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-t-lg p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
               <div>
-                <CardTitle className="text-lg sm:text-xl">Teste de Inteligência Emocional</CardTitle>
+                <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+                  <Heart className="h-5 w-5" />
+                  Teste de Inteligência Emocional
+                </CardTitle>
                 <CardDescription className="text-pink-100 text-sm sm:text-base">
-                  Item {currentItem + 1} de {emotionalItems.length}
+                  Questão {currentQuestion + 1} de {questions.length}
                 </CardDescription>
               </div>
               <div className="text-center sm:text-right">
-                <div className="text-xl sm:text-2xl font-bold">{currentItem + 1}</div>
-                <div className="text-xs sm:text-sm text-pink-100">/{emotionalItems.length}</div>
+                <div className="text-xl sm:text-2xl font-bold">{currentQuestion + 1}</div>
+                <div className="text-xs sm:text-sm text-pink-100">/{questions.length}</div>
               </div>
             </div>
-            <Progress value={((currentItem + 1) / emotionalItems.length) * 100} className="mt-6 bg-pink-400" />
+            <Progress value={progress} className="mt-6 bg-pink-400" />
           </CardHeader>
           <CardContent className="p-6 sm:p-8">
             <div className="text-center mb-8">
-              <div className="text-4xl sm:text-6xl mb-4">
-                {emotionalItems[currentItem].category === "intrapersonal" ? "🧠" : "🤝"}
+              <div className="text-4xl sm:text-6xl mb-4">❤️</div>
+              <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                <span className="text-sm font-medium text-gray-600">Pergunta {currentQuestionData.id}</span>
               </div>
-              <div className="mb-4">
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    emotionalItems[currentItem].category === "intrapersonal"
-                      ? "bg-blue-100 text-blue-800"
-                      : "bg-green-100 text-green-800"
-                  }`}
-                >
-                  {emotionalItems[currentItem].category === "intrapersonal" ? "Intrapessoal" : "Interpessoal"}
-                </span>
-              </div>
-              <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-800 leading-relaxed">
-                {emotionalItems[currentItem].text}
+              <h2 className="text-lg sm:text-xl font-semibold mb-6 text-gray-800 leading-relaxed">
+                {currentQuestionData.text}
               </h2>
             </div>
 
-            <div className="mb-8">
-              <Label className="text-base sm:text-lg font-medium mb-6 block text-center">
-                Em uma escala de 1 a 7, avalie sua capacidade nesta área:
-              </Label>
+            {/* Intrapersonal Scale */}
+            <div className="mb-8 bg-blue-50 p-6 rounded-lg">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-2xl">🧠</span>
+                <div>
+                  <Label className="text-base font-semibold text-blue-800">Intrapessoal (de 1 a 7)</Label>
+                  <p className="text-sm text-blue-600">Sua percepção e controle das próprias emoções</p>
+                </div>
+              </div>
 
-              <div className="grid grid-cols-7 gap-2 sm:gap-3 mb-6">
+              <div className="grid grid-cols-7 gap-2 sm:gap-3 mb-4">
                 {Array.from({ length: 7 }, (_, i) => i + 1).map((score) => (
                   <button
                     key={score}
-                    onClick={() => handleScoreSelect(score)}
+                    onClick={() => handleScoreSelect("intrapersonal", score)}
                     className={`h-12 sm:h-14 rounded-lg border-2 font-bold text-sm sm:text-base transition-all ${
-                      selectedScore === score
-                        ? "border-pink-500 bg-pink-500 text-white shadow-lg"
-                        : "border-gray-300 bg-white text-gray-700 hover:border-pink-300 hover:bg-pink-50"
+                      currentResponse.intrapersonal === score
+                        ? "border-blue-500 bg-blue-500 text-white shadow-lg"
+                        : "border-gray-300 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50"
                     }`}
                   >
                     {score}
@@ -334,30 +377,76 @@ export default function EmotionalIntelligenceTest({
                 ))}
               </div>
 
-              <div className="flex justify-between text-xs sm:text-sm text-gray-500 mb-8">
-                <span>1 - Baixa Capacidade</span>
-                <span>4 - Moderada</span>
-                <span>7 - Alta Capacidade</span>
+              <div className="flex justify-between text-xs text-blue-600">
+                <span>1 - Capacidade Baixa</span>
+                <span>4 - Capacidade Moderada</span>
+                <span>7 - Capacidade Alta</span>
               </div>
-
-              {selectedScore !== null && (
-                <div className="text-center p-4 bg-pink-50 rounded-lg">
-                  <p className="text-pink-800 font-medium">
-                    Você selecionou: <span className="font-bold text-lg">{selectedScore}/7</span>
-                  </p>
-                  <p className="text-pink-600 text-sm">{getScoreLabel(selectedScore)}</p>
-                </div>
-              )}
             </div>
 
+            {/* Interpersonal Scale */}
+            <div className="mb-8 bg-green-50 p-6 rounded-lg">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-2xl">🤝</span>
+                <div>
+                  <Label className="text-base font-semibold text-green-800">Interpessoal (de 1 a 7)</Label>
+                  <p className="text-sm text-green-600">Sua habilidade de lidar com emoções e interações com outros</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-7 gap-2 sm:gap-3 mb-4">
+                {Array.from({ length: 7 }, (_, i) => i + 1).map((score) => (
+                  <button
+                    key={score}
+                    onClick={() => handleScoreSelect("interpersonal", score)}
+                    className={`h-12 sm:h-14 rounded-lg border-2 font-bold text-sm sm:text-base transition-all ${
+                      currentResponse.interpersonal === score
+                        ? "border-green-500 bg-green-500 text-green-900 shadow-lg"
+                        : "border-gray-300 bg-white text-gray-700 hover:border-green-300 hover:bg-green-50"
+                    }`}
+                  >
+                    {score}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex justify-between text-xs text-green-600">
+                <span>1 - Capacidade Baixa</span>
+                <span>4 - Capacidade Moderada</span>
+                <span>7 - Capacidade Alta</span>
+              </div>
+            </div>
+
+            {/* Current Selection Display */}
+            {isComplete && (
+              <div className="text-center p-4 bg-gray-50 rounded-lg mb-6">
+                <p className="text-gray-800 font-medium mb-2">Suas avaliações para esta pergunta:</p>
+                <div className="flex justify-center gap-6">
+                  <div className="text-blue-600">
+                    <span className="font-bold">🧠 Intrapessoal: {currentResponse.intrapersonal}/7</span>
+                  </div>
+                  <div className="text-green-600">
+                    <span className="font-bold">🤝 Interpessoal: {currentResponse.interpersonal}/7</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-              <div className="text-xs sm:text-sm text-gray-500 px-2">Estudante: {studentName}</div>
+              <div className="flex items-center gap-4">
+                <div className="text-xs sm:text-sm text-gray-500 px-2">Estudante: {studentName}</div>
+                {canGoBack && (
+                  <Button onClick={handlePreviousQuestion} variant="outline" className="h-12">
+                    ← Anterior
+                  </Button>
+                )}
+              </div>
               <Button
-                onClick={handleNextItem}
-                disabled={selectedScore === null}
+                onClick={handleNextQuestion}
+                disabled={!isComplete}
                 className="bg-pink-600 hover:bg-pink-700 w-full sm:w-auto h-12"
               >
-                {currentItem === emotionalItems.length - 1 ? "Finalizar Teste" : "Próximo Item"}
+                {currentQuestion === questions.length - 1 ? "Finalizar Teste" : "Próxima Questão"}
               </Button>
             </div>
           </CardContent>

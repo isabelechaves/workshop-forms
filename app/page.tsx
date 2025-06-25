@@ -242,7 +242,7 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
           <div className="flex justify-center mb-6">
             <Logo size="lg" />
           </div>
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 px-2">Workshop de Ética Profissional</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 px-2">Aulão de Ética Profissional</h1>
           <p className="text-gray-500 text-sm sm:text-base px-4">
             Desenvolva suas competências éticas no ambiente profissional
           </p>
@@ -459,7 +459,7 @@ O episódio gerou uma importante reflexão: é possível inovar sem mudar a form
 
         {/* Footer */}
         <div className="text-center mt-10 sm:mt-12 text-gray-500 px-4">
-          <p className="text-xs sm:text-sm">© 2024 Workshop de Ética Profissional - Prof. Elvis de Aguiar</p>
+          <p className="text-xs sm:text-sm">© 2025 Aulão de Ética Profissional - Prof. Elvis de Aguiar</p>
         </div>
       </div>
     </div>

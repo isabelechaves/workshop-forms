@@ -272,7 +272,7 @@ export default function ProfessorDashboard() {
             <Logo size="md" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard do Professor</h1>
-          <p className="text-gray-600">Workshop de Ética Profissional</p>
+          <p className="text-gray-600">Aulão de Ética Profissional</p>
         </div>
 
         {/* Shift Filter */}

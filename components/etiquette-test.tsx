@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -139,6 +139,7 @@ export default function EtiquetteTest({ studentName, studentEmail, studentShift,
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
   const [showResult, setShowResult] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [canGoBack, setCanGoBack] = useState(false)
 
   const handleAnswerSelect = (optionIndex: number) => {
     setSelectedAnswer(optionIndex)
@@ -159,6 +160,17 @@ export default function EtiquetteTest({ studentName, studentEmail, studentShift,
       calculateResult(newAnswers)
     }
   }
+
+  const handlePreviousQuestion = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1)
+      setSelectedAnswer(answers[currentQuestion - 1] || null)
+    }
+  }
+
+  useEffect(() => {
+    setCanGoBack(currentQuestion > 0)
+  }, [currentQuestion])
 
   const calculateResult = async (finalAnswers: number[]) => {
     const totalPoints = finalAnswers.reduce((sum, answerIndex, questionIndex) => {
@@ -350,7 +362,14 @@ export default function EtiquetteTest({ studentName, studentEmail, studentShift,
             </RadioGroup>
 
             <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-              <div className="text-xs sm:text-sm text-gray-500 px-2">Estudante: {studentName}</div>
+              <div className="flex items-center gap-4">
+                <div className="text-xs sm:text-sm text-gray-500 px-2">Estudante: {studentName}</div>
+                {canGoBack && (
+                  <Button onClick={handlePreviousQuestion} variant="outline" className="h-12">
+                    ← Anterior
+                  </Button>
+                )}
+              </div>
               <Button
                 onClick={handleNextQuestion}
                 disabled={selectedAnswer === null}

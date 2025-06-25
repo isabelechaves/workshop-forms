@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -77,6 +77,7 @@ export default function BehavioralCompetencyTest({
   const [selectedScore, setSelectedScore] = useState<number | null>(null)
   const [showResult, setShowResult] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [canGoBack, setCanGoBack] = useState(false)
 
   const handleScoreSelect = (score: number) => {
     setSelectedScore(score)
@@ -95,6 +96,18 @@ export default function BehavioralCompetencyTest({
       calculateResult(newScores)
     }
   }
+
+  const handlePreviousCompetency = () => {
+    if (currentCompetency > 0) {
+      const previousCompetency = competencies[currentCompetency - 1]
+      setSelectedScore(scores[previousCompetency.id] || null)
+      setCurrentCompetency(currentCompetency - 1)
+    }
+  }
+
+  useEffect(() => {
+    setCanGoBack(currentCompetency > 0)
+  }, [currentCompetency])
 
   const calculateResult = async (finalScores: Record<string, number>) => {
     const totalScore = Object.values(finalScores).reduce((sum, score) => sum + score, 0)
@@ -315,7 +328,14 @@ export default function BehavioralCompetencyTest({
             </div>
 
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-              <div className="text-xs sm:text-sm text-gray-500 px-2">Estudante: {studentName}</div>
+              <div className="flex items-center gap-4">
+                <div className="text-xs sm:text-sm text-gray-500 px-2">Estudante: {studentName}</div>
+                {canGoBack && (
+                  <Button onClick={handlePreviousCompetency} variant="outline" className="h-12">
+                    ← Anterior
+                  </Button>
+                )}
+              </div>
               <Button
                 onClick={handleNextCompetency}
                 disabled={selectedScore === null}
